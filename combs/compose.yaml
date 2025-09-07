@@ -1,14 +1,4 @@
 services:
-  comb-tunnel:
-    image: nqngo1/bastion:2025.07
-    volumes:
-      - ./keys/authorized_keys:/home/bastion/.ssh/authorized_keys
-      - ./keys/host:/host_keys.d:rw
-    ports:
-      - "20037:22"
-    networks:
-      - hive-network
-
   comb01:
     image: ghcr.io/ssh-honeypot/cowrie:main
     restart: always
