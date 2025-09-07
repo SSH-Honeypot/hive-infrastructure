@@ -1,0 +1,2 @@
+# Key A -> comb01
+command="ssh -o StrictHostKeyChecking=no -p 2222 cowrie@comb01" ssh-ed25519 AAAAC3Nz... bee01

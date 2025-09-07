@@ -1,0 +1,29 @@
+services:
+  comb-tunnel:
+    image: linuxserver/openssh-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - PUBLIC_KEY_DIR=/keys
+    volumes:
+      - ./keys:/keys:ro
+    ports:
+      - "20037:2222"
+    networks:
+      - cowrie_net
+
+  comb01:
+    image: ghcr.io/ssh-honeypot/cowrie:main
+    restart: always
+    volumes:
+      - ./comb01/etc:/cowrie/cowrie-git/etc
+      - ./comb01/var:/cowrie/cowrie-git/var
+    networks:
+      - hive-network
+    expose:
+      - 2222
+
+networks:
+  hive-network:
+    name: hive-network
