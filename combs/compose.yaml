@@ -11,7 +11,7 @@ services:
     ports:
       - "20037:2222"
     networks:
-      - cowrie_net
+      - hive-network
 
   comb01:
     image: ghcr.io/ssh-honeypot/cowrie:main
