@@ -1,15 +1,11 @@
 services:
   comb-tunnel:
-    image: linuxserver/openssh-server
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Berlin
-      - PUBLIC_KEY_DIR=/keys
+    image: nqngo/docker-bastion
     volumes:
-      - ./keys:/keys:ro
+      - ./keys/authorized_keys:/home/bastion/.ssh/authorized_keys
+      - ./keys/host:/host_keys.d:rw
     ports:
-      - "20037:2222"
+      - "20037:22"
     networks:
       - hive-network
 
