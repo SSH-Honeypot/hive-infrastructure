@@ -34,8 +34,7 @@ services:
     networks:
       - hive-network
     depends_on:
-      mariadb:
-        condition: service_healthy
+      - mariadb
 
   hive-frontend:
     image: ghcr.io/ssh-honeypot/hive-frontend:master
