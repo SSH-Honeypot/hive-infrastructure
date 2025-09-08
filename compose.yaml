@@ -3,7 +3,7 @@ include:
 
 services:
   mariadb:
-    image: mariadb:lts
+    image: mariadb:11
     restart: always
     volumes:
       - ./mariadb-data:/var/lib/mysql
