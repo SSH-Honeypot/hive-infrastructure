@@ -7,8 +7,8 @@ services:
       - ./comb01/var:/cowrie/cowrie-git/var
     networks:
       - hive-network
-    expose:
-      - 2201
+    ports:
+      - "2201:2222"
 
 networks:
   hive-network:
