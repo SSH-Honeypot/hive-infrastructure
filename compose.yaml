@@ -3,12 +3,18 @@ include:
 
 services:
   mariadb:
-    image: mariadb:latest
+    image: mariadb:lts
     restart: always
     volumes:
       - ./mariadb-data:/var/lib/mysql
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
     ports:
       - "3306:3306"
     networks:
@@ -17,8 +23,6 @@ services:
   hive-core:
     image: ghcr.io/ssh-honeypot/hive-core:master
     restart: always
-    depends_on:
-      - mariadb
     env_file:
       - .env
     expose:
@@ -27,6 +31,9 @@ services:
       - 3002
     networks:
       - hive-network
+    depends_on:
+      mariadb:
+        condition: service_healthy
 
   hive-frontend:
     image: ghcr.io/ssh-honeypot/hive-frontend:master
