@@ -2,6 +2,13 @@ include:
   - combs/compose.yaml
 
 services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: always
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+
   mariadb:
     image: mariadb:11
     restart: always
