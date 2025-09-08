@@ -7,14 +7,11 @@ services:
     restart: always
     volumes:
       - ./mariadb-data:/var/lib/mysql
-    env_file:
-      - .env
-    healthcheck:
-      test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
-      start_period: 10s
-      interval: 10s
-      timeout: 5s
-      retries: 3
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: 1
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     ports:
       - "3306:3306"
     networks:
@@ -23,8 +20,13 @@ services:
   hive-core:
     image: ghcr.io/ssh-honeypot/hive-core:master
     restart: always
-    env_file:
-      - .env
+    environment:
+      MYSQL_HOST: mariadb
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ${MARIADB_DATABASE}
+      MYSQL_USERNAME: ${MARIADB_USER}
+      MYSQL_PASSWORD: ${MARIADB_PASSWORD}
+      GEOIP_FAST_LOOKUP: 18
     expose:
       - 3000
       - 3001
